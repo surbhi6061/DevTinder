@@ -1,23 +1,23 @@
 import express from 'express'
+import { adminAuth,userAuth } from './middlewares/auth.js';
 
 const app=express();
 
+//handle auth middleware for all GET,POST...requests
+app.use("/admin",adminAuth)
 
-//only one response will be send and considered,rest will either ignored or throw error
-app.get("/user",(req,res,next)=>{
-    res.send({firstName:"surbhi",lastName:"kumari"})
-    next()
-},(req,res)=>{
-    console.log("2nd next router")
-    // res.send("response 2")
-},(req,res)=>{
-    console.log("third route calling")
-    // res.send("third route")
+app.use("/user",userAuth,(req,res)=>{
+    res.send("user auth")
 })
 
-app.use("/test",(req,res)=>{
-    res.send("hello from the server")
+app.get("/admin/getAllData",(req,res)=>{
+    res.send("all data")
 })
+
+app.get("/admin/deleteUser",(req,res)=>{
+    res.send("deleted users")
+})
+
 
 app.listen(4000,()=>{
     console.log("server started succesfully")
