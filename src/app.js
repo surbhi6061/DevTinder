@@ -2,16 +2,19 @@ import express from 'express'
 
 const app=express();
 
-// This will only handle GET call to /user
-app.get("/user",(req,res)=>{
-    res.json({firstName:"surbhi",lastName:"kumari"})
 
+//only one response will be send and considered,rest will either ignored or throw error
+app.get("/user",(req,res,next)=>{
+    res.send({firstName:"surbhi",lastName:"kumari"})
+    next()
+},(req,res)=>{
+    console.log("2nd next router")
+    // res.send("response 2")
+},(req,res)=>{
+    console.log("third route calling")
+    // res.send("third route")
 })
 
-//this will match all the HTTP method API calls to /
-// app.use("/",(req,res)=>{
-//     res.send("hello from the dashboard")
-// })
 app.use("/test",(req,res)=>{
     res.send("hello from the server")
 })
