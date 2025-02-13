@@ -1,23 +1,18 @@
 import express from 'express'
-import { adminAuth,userAuth } from './middlewares/auth.js';
 
 const app=express();
+app.get("/getUserData",(req,res)=>{
 
-//handle auth middleware for all GET,POST...requests
-app.use("/admin",adminAuth)
-
-app.use("/user",userAuth,(req,res)=>{
-    res.send("user auth")
+    throw new Error("hsjgdjsdf");
+res.send("user Data Sent")
 })
 
-app.get("/admin/getAllData",(req,res)=>{
-    res.send("all data")
+//err should be always first parameter
+app.use("/",(err,req,res,next)=>{
+if(err){
+    res.status(500).send("something went wrong")
+}
 })
-
-app.get("/admin/deleteUser",(req,res)=>{
-    res.send("deleted users")
-})
-
 
 app.listen(4000,()=>{
     console.log("server started succesfully")
