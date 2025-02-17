@@ -22,6 +22,19 @@ app.post("/signup",async(req,res)=>{
     }
 })
 
+//Get user by email
+app.get("/user",async(req,res)=>{
+    const userEmail=req.body.emailId
+
+    try{
+        const user=await UserModel.find({emailId:userEmail});
+        //***send the user data back after filtering(finding)
+        res.send(user)
+    }catch(err){
+        res.status(400).send("error while fetching userEmailId")
+    }
+})
+
 //once db connection successful then only start the server
 connectDB().then(() => {
     console.log("Data base connection sucessful")
