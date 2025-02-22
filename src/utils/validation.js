@@ -11,3 +11,7 @@ export const validationSignUpData = (req) => {
         throw new Error("Please enter a strong password")
     }
 }
+
+export const validationEditProfileData=(req)=>{
+    
+}
